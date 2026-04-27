@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import os
 import sqlite3
 from datetime import UTC, datetime
 from pathlib import Path
@@ -12,7 +13,10 @@ from app.schemas.domain import TaskRecord
 
 class TaskRepository:
     def __init__(self, db_path: Path) -> None:
-        self.db_path = db_path
+        if os.getenv("VERCEL"):
+            self.db_path = Path("/tmp/storage/tasks.sqlite3")
+        else:
+            self.db_path = db_path
         self._lock = asyncio.Lock()
 
     def ensure_schema(self) -> None:
