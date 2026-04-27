@@ -1,0 +1,6 @@
+.env
+backend/.env
+
+backend/storage/raw_results/
+backend/storage/tasks.sqlite3
+*.sqlite3

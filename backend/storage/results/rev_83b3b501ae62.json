@@ -1,0 +1,154 @@
+{
+  "taskId": "rev_83b3b501ae62",
+  "status": "succeeded",
+  "basicInfo": {
+    "contractName": "软件开发合同_测试版125 - 副本",
+    "contractType": "待识别合同",
+    "perspective": "乙方"
+  },
+  "summary": {
+    "riskLevel": "?",
+    "conclusion": "已返回部分结构化结果，但建议人工复核完整报告内容。"
+  },
+  "stats": {
+    "high": 0,
+    "medium": 0,
+    "low": 0,
+    "manualReview": true
+  },
+  "workflow": {
+    "groups": [
+      {
+        "name": "合同审查-副本2",
+        "status": "done",
+        "nodes": [
+          {
+            "name": "开始",
+            "status": "done"
+          },
+          {
+            "name": "结束",
+            "status": "done"
+          },
+          {
+            "name": "大模型-合同类型识别",
+            "status": "done"
+          },
+          {
+            "name": "大模型-重点条款抽取",
+            "status": "done"
+          },
+          {
+            "name": "大模型-提取文件名",
+            "status": "done"
+          },
+          {
+            "name": "代码-截断文本前20行",
+            "status": "done"
+          },
+          {
+            "name": "变量赋值-contract_name",
+            "status": "done"
+          },
+          {
+            "name": "大模型-全局审查层",
+            "status": "done"
+          },
+          {
+            "name": "知识检索-全局",
+            "status": "done"
+          },
+          {
+            "name": "代码-风险统计规则",
+            "status": "done"
+          },
+          {
+            "name": "大模型-报告生成",
+            "status": "done"
+          },
+          {
+            "name": "循环",
+            "status": "done"
+          },
+          {
+            "name": "条件判断-条款缺失",
+            "status": "done"
+          },
+          {
+            "name": "大模型-missing核查",
+            "status": "done"
+          },
+          {
+            "name": "代码-ArrayObject去重合并",
+            "status": "done"
+          },
+          {
+            "name": "条件判断-文件名",
+            "status": "done"
+          },
+          {
+            "name": "变量赋值-filename",
+            "status": "pending"
+          },
+          {
+            "name": "大模型-审查口径约束",
+            "status": "done"
+          },
+          {
+            "name": "大模型-建议一致性校验",
+            "status": "done"
+          },
+          {
+            "name": "大模型-补充风险主题抽取",
+            "status": "done"
+          },
+          {
+            "name": "大模型-结构化汇总",
+            "status": "done"
+          },
+          {
+            "name": "变量赋值-审查视角",
+            "status": "done"
+          },
+          {
+            "name": "变量赋值-文件文本",
+            "status": "done"
+          }
+        ]
+      }
+    ]
+  },
+  "fullReport": "{\"evidence_index\":[{\"clause_order\":0,\"clause_type\":\"未分类\",\"evidence_position\":\"\",\"evidence_quote\":\"\",\"finding\":\"当前条款未体现知识产权归属、源码交付及验收关联等关键事项\",\"need_manual_review\":true,\"risk_level\":\"高\",\"source\":\"clause\",\"suggestion\":\"建议补充知识产权归属、源码交付及验收关联的具体条款，明确各方权利和义务\",\"title\":\"未命名事项\"},{\"clause_order\":0,\"clause_type\":\"保密条款\",\"evidence_position\":\"\",\"evidence_quote\":\"\",\"finding\":\"当前条款未体现保密条款的具体内容\",\"need_manual_review\":true,\"risk_level\":\"高\",\"source\":\"clause\",\"suggestion\":\"建议补充具体的保密范围、保密期限和保密责任条款，确保合同双方在保密方面的权利和义务明确。\",\"title\":\"未命名事项\"},{\"clause_order\":0,\"clause_type\":\"未分类\",\"evidence_position\":\"\",\"evidence_quote\":\"\",\"finding\":\"当前条款未体现责任限制的具体内容和边界\",\"need_manual_review\":true,\"risk_level\":\"高\",\"source\":\"clause\",\"suggestion\":\"建议补充责任限制的具体内容和边界，明确在项目失败或终止时各方的责任和权益。\",\"title\":\"未命名事项\"},{\"clause_order\":0,\"clause_type\":\"未分类\",\"evidence_position\":\"\",\"evidence_quote\":\"\",\"finding\":\"合同缺少项目失败或终止时的成果使用权和结算规则\",\"need_manual_review\":true,\"risk_level\":\"高\",\"source\":\"clause\",\"suggestion\":\"建议补充项目失败或终止时的成果使用权和结算规则，明确双方在此情况下的权利和义务\",\"title\":\"未命名事项\"},{\"clause_order\":0,\"clause_type\":\"争议解决\",\"evidence_position\":\"\",\"evidence_quote\":\"\",\"finding\":\"当前条款未体现争议解决机制\",\"need_manual_review\":true,\"risk_level\":\"高\",\"source\":\"clause\",\"suggestion\":\"建议增加争议解决条款，明确约定争议解决的方式（如仲裁或诉讼）和适用法律。\",\"title\":\"未命名事项\"},{\"clause_order\":1,\"clause_type\":\"1\",\"evidence_position\":\"第一条 项目概况 项目内容\",\"evidence_quote\":\"完成系统设计、程序开发、数据库搭建、接口联调、测试、部署上线、培训、文档交付及质保维护等工作。\",\"finding\":\"当前条款已有基本约定，但交付物和验收颗粒度未细化\",\"need_manual_review\":false,\"risk_level\":\"低\",\"source\":\"clause\",\"suggestion\":\"建议补充具体的交付物清单和验收标准，明确各阶段交付物的验收条件和时间节点\",\"title\":\"[\\\"系统功能\\\",\\\"文档及维护\\\"]\"},{\"clause_order\":2,\"clause_type\":\"2\",\"evidence_position\":\"第二条 项目范围、需求确认与变更\",\"evidence_quote\":\"项目范围以甲方通过盖章文件、电子邮件、企业微信、钉钉等书面形式确认的需求、原型、流程说明、功能清单及变更记录为准。\",\"finding\":\"当前条款已有基本约定，但需求变更机制和交付物验收颗粒度可进一步细化\",\"need_manual_review\":false,\"risk_level\":\"低\",\"source\":\"clause\",\"suggestion\":\"建议增加需求变更的处理流程及交付物和验收的具体颗粒度的约定\",\"title\":\"[\\\"功能范围\\\",\\\"需求确认依据\\\"]\"},{\"clause_order\":2,\"clause_type\":\"保证条款\",\"evidence_position\":\"第一条 项目概况 项目目标\",\"evidence_quote\":\"保证系统具备稳定运行、数据准确、安全可控、可维护及可二次开发能力。\",\"finding\":\"当前条款已有基本约定，但未具体细化数据安全的具体措施和标准\",\"need_manual_review\":false,\"risk_level\":\"低\",\"source\":\"clause\",\"suggestion\":\"建议补充具体的数据安全措施和标准，如数据加密、访问控制、定期安全审计等\",\"title\":\"[\\\"系统安全能力\\\"]\"},{\"clause_order\":3,\"clause_type\":\"项目周期\",\"evidence_position\":\"第一条 项目概况 开发周期\",\"evidence_quote\":\"开发周期：总周期为90个自然日，自本合同生效、甲方支付首期款且甲方已提供项目启动所需基础资料之日起计算。\",\"finding\":\"当前条款已有基本约定，但未明确乙方书面确认启动日的具体形式和要求。\",\"need_manual_review\":false,\"risk_level\":\"低\",\"source\":\"clause\",\"suggestion\":\"建议补充乙方书面确认启动日的具体形式和要求，例如确认邮件的格式、内容要求等。\",\"title\":\"[\\\"周期时长\\\",\\\"起算条件\\\"]\"},{\"clause_order\":3,\"clause_type\":\"付款条款\",\"evidence_position\":\"第一条 项目概况 开发周期\",\"evidence_quote\":\"自本合同生效、甲方支付首期款且甲方已提供项目启动所需基础资料之日起计算。\",\"finding\":\"首期款支付条件的具体触发点描述较为模糊\",\"need_manual_review\":false,\"risk_level\":\"低\",\"source\":\"clause\",\"suggestion\":\"建议补充具体的付款触发条件和操作细节，如'自甲方收到乙方提供的发票并确认无误后X个工作日内支付首期款'。\",\"title\":\"[\\\"首期款支付条件\\\"]\"},{\"clause_order\":4,\"clause_type\":\"验收条款\",\"evidence_position\":\"第二条 项目范围、需求确认与变更\",\"evidence_quote\":\"经甲方确认后,作为项目开发、交付和验收依据.\",\"finding\":\"当前条款未具体描述验收标准和验收流程\",\"need_manual_review\":false,\"risk_level\":\"低\",\"source\":\"clause\",\"suggestion\":\"建议补充具体的验收标准和验收流程，明确各项验收指标和验收方法\",\"title\":\"[\\\"验收依据\\\"]\"},{\"clause_order\":5,\"clause_type\":\"变更机制\",\"evidence_position\":\"第二条 项目范围、需求确认与变更\",\"evidence_quote\":\"如甲方提出需求变更，乙方应在2个工作日内完成书面评估并反馈对功能、工期、费用的影响，双方书面确认后执行。\",\"finding\":\"当前条款已有基本约定，仅细节仍可增强\",\"need_manual_review\":false,\"risk_level\":\"低\",\"source\":\"clause\",\"suggestion\":\"建议补充变更评估的具体标准和书面确认的详细流程，例如评估报告的内容要求和书面确认的形式\",\"title\":\"[\\\"变更评估\\\",\\\"书面确认执行\\\"]\"},{\"clause_order\":6,\"clause_type\":\"违约责任\",\"evidence_position\":\"第二条 项目范围、需求确认与变更\",\"evidence_quote\":\"因乙方理解错误、遗漏、技术方案不当或未尽合理审查义务导致的返工、修改或延期，由乙方自行承担责任及费用。\",\"finding\":\"当前条款未明确具体的违约情形和对应的责任，赔偿范围也不够清晰。\",\"need_manual_review\":false,\"risk_level\":\"中\",\"source\":\"clause\",\"suggestion\":\"建议列明具体的违约情形及对应的责任，明确赔偿范围，设置合理的违约金比例和整改期限。\",\"title\":\"[\\\"乙方违约情形\\\",\\\"责任承担\\\"]\"},{\"clause_order\":999999,\"clause_type\":\"合规前提\",\"evidence_position\":\"第一条 项目概况 项目目标\",\"evidence_quote\":\"保证系统具备稳定运行、数据准确、安全可控、可维护及可二次开发能力。\",\"finding\":\"数据安全的具体保护措施和责任分配不明确。\",\"need_manual_review\":true,\"risk_level\":\"高\",\"source\":\"extra_risk_topic\",\"suggestion\":\"明确数据安全的具体保护措施和各方的责任分配。\",\"title\":\"数据安全责任不明确\"},{\"clause_order\":999999,\"clause_type\":\"跨条款闭环\",\"evidence_position\":\"第二条 项目范围、需求确认与变更\",\"evidence_quote\":\"如甲方提出需求变更，乙方应在2个工作日内完成书面评估并反馈对功能、工期、费用的影响，双方书面确认后执行。\",\"finding\":\"需求变更后的实施和验收流程不明确。\",\"need_manual_review\":true,\"risk_level\":\"中\",\"source\":\"extra_risk_topic\",\"suggestion\":\"完善需求变更后的实施和验收流程。\",\"title\":\"变更管理流程不完善\"},{\"clause_order\":999999,\"clause_type\":\"业务前提\",\"evidence_position\":\"第一条 项目概况 开发周期\",\"evidence_quote\":\"自本合同生效、甲方支付首期款且甲方已提供项目启动所需基础资料之日起计算。\",\"finding\":\"项目启动的具体条件和时间节点不明确。\",\"need_manual_review\":true,\"risk_level\":\"中\",\"source\":\"extra_risk_topic\",\"suggestion\":\"明确项目启动的具体条件和各条件的时间节点。\",\"title\":\"项目启动条件不明确\"}],\"extra_risk_topics\":[{\"core_issue\":\"数据安全的具体保护措施和责任分配不明确。\",\"evidence_position\":\"第一条 项目概况 项目目标\",\"evidence_quote\":\"保证系统具备稳定运行、数据准确、安全可控、可维护及可二次开发能力。\",\"need_manual_review\":true,\"related_clause_titles\":[\"第一条 项目概况 项目目标\"],\"risk_level\":\"high\",\"suggested_action\":\"明确数据安全的具体保护措施和各方的责任分配。\",\"topic_category\":\"合规前提\",\"topic_name\":\"数据安全责任不明确\",\"why_not_in_13\":\"虽然提及了数据安全，但未具体说明如何实现安全可控，缺乏具体的安全措施和责任分配。\"},{\"core_issue\":\"项目启动的具体条件和时间节点不明确。\",\"evidence_position\":\"第一条 项目概况 开发周期\",\"evidence_quote\":\"自本合同生效、甲方支付首期款且甲方已提供项目启动所需基础资料之日起计算。\",\"need_manual_review\":true,\"related_clause_titles\":[\"第一条 项目概况 开发周期\"],\"risk_level\":\"medium\",\"suggested_action\":\"明确项目启动的具体条件和各条件的时间节点。\",\"topic_category\":\"业务前提\",\"topic_name\":\"项目启动条件不明确\",\"why_not_in_13\":\"虽然提及了项目启动的条件，但未明确各条件的具体要求和时间节点。\"},{\"core_issue\":\"需求变更后的实施和验收流程不明确。\",\"evidence_position\":\"第二条 项目范围、需求确认与变更\",\"evidence_quote\":\"如甲方提出需求变更，乙方应在2个工作日内完成书面评估并反馈对功能、工期、费用的影响，双方书面确认后执行。\",\"need_manual_review\":true,\"related_clause_titles\":[\"第二条 项目范围、需求确认与变更\"],\"risk_level\":\"medium\",\"suggested_action\":\"完善需求变更后的实施和验收流程。\",\"topic_category\":\"跨条款闭环\",\"topic_name\":\"变更管理流程不完善\",\"why_not_in_13\":\"虽然提及了需求变更的评估和反馈流程，但未涵盖变更后的实施和验收流程。\"}],\"final_review_report\":\"\",\"report_material\":{\"clause_ordered_findings\":[{\"clause_order\":0,\"clause_title\":\"未命名事项\",\"clause_type\":\"未分类\",\"core_issue\":\"当前条款未体现知识产权归属、源码交付及验收关联等关键事项\",\"evidence_position\":\"\",\"evidence_quote\":\"\",\"need_manual_review\":true,\"revision_suggestion\":\"建议补充知识产权归属、源码交付及验收关联的具体条款，明确各方权利和义务\",\"risk_level\":\"\",\"risk_reason\":\"\"},{\"clause_order\":0,\"clause_title\":\"未命名事项\",\"clause_type\":\"保密条款\",\"core_issue\":\"当前条款未体现保密条款的具体内容\",\"evidence_position\":\"\",\"evidence_quote\":\"\",\"need_manual_review\":true,\"revision_suggestion\":\"建议补充具体的保密范围、保密期限和保密责任条款，确保合同双方在保密方面的权利和义务明确\",\"risk_level\":\"\",\"risk_reason\":\"\"},{\"clause_order\":0,\"clause_title\":\"未命名事项\",\"clause_type\":\"未分类\",\"core_issue\":\"当前条款未体现责任限制的具体内容和边界\",\"evidence_position\":\"\",\"evidence_quote\":\"\",\"need_manual_review\":true,\"revision_suggestion\":\"建议补充责任限制的具体内容和边界，明确在项目失败或终止时各方的责任和权益\",\"risk_level\":\"\",\"risk_reason\":\"\"},{\"clause_order\":0,\"clause_title\":\"未命名事项\",\"clause_type\":\"未分类\",\"core_issue\":\"合同缺少项目失败或终止时的成果使用权和结算规则\",\"evidence_position\":\"\",\"evidence_quote\":\"\",\"need_manual_review\":true,\"revision_suggestion\":\"建议补充项目失败或终止时的成果使用权和结算规则，明确双方在此情况下的权利和义务\",\"risk_level\":\"\",\"risk_reason\":\"\"},{\"clause_order\":0,\"clause_title\":\"未命名事项\",\"clause_type\":\"争议解决\",\"core_issue\":\"当前条款未体现争议解决机制\",\"evidence_position\":\"\",\"evidence_quote\":\"\",\"need_manual_review\":true,\"revision_suggestion\":\"建议增加争议解决条款，明确约定争议解决的方式（如仲裁或诉讼）和适用法律\",\"risk_level\":\"\",\"risk_reason\":\"\"}],\"consistency_summary\":\"合同整体结构基本完整，但存在若干跨条款衔接不足、闭环不完整、边界不清的问题，以及多个关键核心条款缺失。\",\"evidence_index\":[{\"clause_order\":0,\"clause_type\":\"未分类\",\"evidence_position\":\"\",\"evidence_quote\":\"\",\"finding\":\"当前条款未体现知识产权归属、源码交付及验收关联等关键事项\",\"need_manual_review\":true,\"risk_level\":\"高\",\"source\":\"clause\",\"suggestion\":\"建议补充知识产权归属、源码交付及验收关联的具体条款，明确各方权利和义务\"},{\"clause_order\":0,\"clause_type\":\"保密条款\",\"evidence_position\":\"\",\"evidence_quote\":\"\",\"finding\":\"当前条款未体现保密条款的具体内容\",\"need_manual_review\":true,\"risk_level\":\"高\",\"source\":\"clause\",\"suggestion\":\"建议补充具体的保密范围、保密期限和保密责任条款，确保合同双方在保密方面的权利和义务明确\"},{\"clause_order\":0,\"clause_type\":\"未分类\",\"evidence_position\":\"\",\"evidence_quote\":\"\",\"finding\":\"当前条款未体现责任限制的具体内容和边界\",\"need_manual_review\":true,\"risk_level\":\"高\",\"source\":\"clause\",\"suggestion\":\"建议补充责任限制的具体内容和边界，明确在项目失败或终止时各方的责任和权益\"},{\"clause_order\":0,\"clause_type\":\"未分类\",\"evidence_position\":\"\",\"evidence_quote\":\"\",\"finding\":\"合同缺少项目失败或终止时的成果使用权和结算规则\",\"need_manual_review\":true,\"risk_level\":\"高\",\"source\":\"clause\",\"suggestion\":\"建议补充项目失败或终止时的成果使用权和结算规则，明确双方在此情况下的权利和义务\"},{\"clause_order\":0,\"clause_type\":\"争议解决\",\"evidence_position\":\"\",\"evidence_quote\":\"\",\"finding\":\"当前条款未体现争议解决机制\",\"need_manual_review\":true,\"risk_level\":\"高\",\"source\":\"clause\",\"suggestion\":\"建议增加争议解决条款，明确约定争议解决的方式（如仲裁或诉讼）和适用法律\"}],\"extra_risk_topics\":[{\"core_issue\":\"数据安全的具体保护措施和责任分配不明确。\",\"evidence_position\":\"第一条 项目概况 项目目标\",\"evidence_quote\":\"保证系统具备稳定运行、数据准确、安全可控、可维护及可二次开发能力。\",\"need_manual_review\":true,\"related_clause_titles\":[\"第一条 项目概况 项目目标\"],\"risk_level\":\"高\",\"suggested_action\":\"明确数据安全的具体保护措施和各方的责任分配。\",\"topic_category\":\"合规前提\",\"topic_name\":\"数据安全责任不明确\",\"why_not_in_13\":\"虽然提及了数据安全，但未具体说明如何实现安全可控，缺乏具体的安全措施和责任分配。\"},{\"core_issue\":\"项目启动的具体条件和时间节点不明确。\",\"evidence_position\":\"第一条 项目概况 开发周期\",\"evidence_quote\":\"自本合同生效、甲方支付首期款且甲方已提供项目启动所需基础资料之日起计算。\",\"need_manual_review\":true,\"related_clause_titles\":[\"第一条 项目概况 开发周期\"],\"risk_level\":\"中\",\"suggested_action\":\"明确项目启动的具体条件和各条件的时间节点。\",\"topic_category\":\"业务前提\",\"topic_name\":\"项目启动条件不明确\",\"why_not_in_13\":\"虽然提及了项目启动的条件，但未明确各条件的具体要求和时间节点。\"},{\"core_issue\":\"需求变更后的实施和验收流程不明确。\",\"evidence_position\":\"第二条 项目范围、需求确认与变更\",\"evidence_quote\":\"如甲方提出需求变更，乙方应在2个工作日内完成书面评估并反馈对功能、工期、费用的影响，双方书面确认后执行。\",\"need_manual_review\":true,\"related_clause_titles\":[\"第二条 项目范围、需求确认与变更\"],\"risk_level\":\"中\",\"suggested_action\":\"完善需求变更后的实施和验收流程。\",\"topic_category\":\"跨条款闭环\",\"topic_name\":\"变更管理流程不完善\",\"why_not_in_13\":\"虽然提及了需求变更的评估和反馈流程，但未涵盖变更后的实施和验收流程。\"}],\"manual_review_decision\":{\"need_manual_review\":true,\"reasons\":[\"主要影响知识产权保护、项目交付及后续维护，可能导致纠纷和额外成本\",\"主要影响知识产权保护和商业秘密安全，可能导致公司利益受损\",\"主要影响项目失败或终止时的责任划分和权益保障，可能导致乙方承担过重的责任和损失\",\"主要影响项目终止后的权益分配和财务结算，可能导致乙方在项目失败或终止时无法获得应有的补偿\",\"可能导致在发生争议时无法及时有效地解决，影响项目的顺利进行和双方的利益\"]},\"mechanism_gaps\":{\"missing_items\":[{\"current_status\":\"missing\",\"evidence_position\":\"\",\"evidence_quote\":\"\",\"mechanism_name\":\"知识产权归属、源码交付及验收关联等关键事项\",\"suggested_direction\":\"建议补充知识产权归属、源码交付及验收关联的具体条款，明确各方权利和义务\"},{\"current_status\":\"missing\",\"evidence_position\":\"\",\"evidence_quote\":\"\",\"mechanism_name\":\"保密条款的具体内容\",\"suggested_direction\":\"建议补充具体的保密范围、保密期限和保密责任条款，确保合同双方在保密方面的权利和义务明确\"},{\"current_status\":\"missing\",\"evidence_position\":\"\",\"evidence_quote\":\"\",\"mechanism_name\":\"责任限制的具体内容和边界\",\"suggested_direction\":\"建议补充责任限制的具体内容和边界，明确在项目失败或终止时各方的责任和权益\"},{\"current_status\":\"missing\",\"evidence_position\":\"\",\"evidence_quote\":\"\",\"mechanism_name\":\"项目失败或终止时的成果使用权和结算规则\",\"suggested_direction\":\"建议补充项目失败或终止时的成果使用权和结算规则，明确双方在此情况下的权利和义务\"},{\"current_status\":\"missing\",\"evidence_position\":\"\",\"evidence_quote\":\"\",\"mechanism_name\":\"争议解决的方式和适用法律\",\"suggested_direction\":\"建议增加争议解决条款，明确约定争议解决的方式（如仲裁或诉讼）和适用法律\"}],\"needs_refinement_items\":[{\"current_status\":\"present\",\"evidence_position\":\"\",\"evidence_quote\":\"\",\"mechanism_name\":\"数据安全的具体保护措施和责任分配\",\"suggested_direction\":\"明确数据安全的具体保护措施和各方的责任分配。\"},{\"current_status\":\"present\",\"evidence_position\":\"\",\"evidence_quote\":\"\",\"mechanism_name\":\"项目启动的具体条件和时间节点\",\"suggested_direction\":\"明确项目启动的具体条件和各条件的时间节点。\"},{\"current_status\":\"present\",\"evidence_position\":\"\",\"evidence_quote\":\"\",\"mechanism_name\":\"需求变更后的实施和验收流程\",\"suggested_direction\":\"完善需求变更后的实施和验收流程。\"}]},\"negotiation_summary\":null,\"overall_conclusion\":\"合同存在若干跨条款衔接不足、闭环不完整、边界不清的问题，且存在多个关键核心条款缺失，建议人工复核以确保合同的稳定履行和争议控制。\",\"overall_risk_level\":\"中\",\"top_priority_items\":[{\"action\":\"补充知识产权归属、源码交付及验收关联的具体条款\",\"core_reason\":\"主要影响知识产权保护、项目交付及后续维护，可能导致纠纷和额外成本\",\"item_name\":\"补充知识产权归属、源码交付及验收关联的具体条款\",\"risk_level\":\"高\"},{\"action\":\"补充具体的保密范围、保密期限和保密责任条款\",\"core_reason\":\"主要影响知识产权保护和商业秘密安全，可能导致公司利益受损\",\"item_name\":\"补充具体的保密范围、保密期限和保密责任条款\",\"risk_level\":\"高\"},{\"action\":\"补充责任限制的具体内容和边界\",\"core_reason\":\"主要影响项目失败或终止时的责任划分和权益保障，可能导致乙方承担过重的责任和损失\",\"item_name\":\"补充责任限制的具体内容和边界\",\"risk_level\":\"高\"},{\"action\":\"补充项目失败或终止时的成果使用权和结算规则\",\"core_reason\":\"主要影响项目终止后的权益分配和财务结算，可能导致乙方在项目失败或终止时无法获得应有的补偿\",\"item_name\":\"补充项目失败或终止时的成果使用权和结算规则\",\"risk_level\":\"高\"},{\"action\":\"增加争议解决条款\",\"core_reason\":\"可能导致在发生争议时无法及时有效地解决，影响项目的顺利进行和双方的利益\",\"item_name\":\"增加争议解决条款\",\"risk_level\":\"高\"}]}}",
+  "issues": [],
+  "contractSections": [
+    {
+      "id": "section-1",
+      "title": "合同正文",
+      "paragraphs": [
+        "企业管理系统软件开发项目合同"
+      ]
+    },
+    {
+      "id": "section-2",
+      "title": "第一条 项目概况",
+      "paragraphs": [
+        "项目名称：企业管理系统软件开发项目。",
+        "项目内容：乙方根据甲方书面确认的需求，完成系统设计、程序开发、数据库搭建、接口联调、测试、部署上线、培训、文档交付及质保维护等工作。",
+        "项目目标：实现用户权限管理、客户管理、合同管理、订单管理、财务统计、数据报表及后台管理等功能，并保证系统具备稳定运行、数据准确、安全可控、可维护及可二次开发能力。",
+        "开发周期：总周期为90个自然日，自本合同生效、甲方支付首期款且甲方已提供项目启动所需基础资料之日起计算。乙方应在前述条件全部满足后2个工作日内书面确认启动日。",
+        "乙方应确保具有完成本项目所需的技术能力、人员配置和履约能力，并独立完成本合同项下义务。"
+      ]
+    },
+    {
+      "id": "section-3",
+      "title": "第二条 项目范围、需求确认与变更",
+      "paragraphs": [
+        "项目范围以甲方通过盖章文件、电子邮件、企业微信、钉钉等书面形式确认的需求、原型、流程说明、功能清单及变更记录为准。",
+        "乙方应在项目启动后7个工作日内完成需求调研和需求澄清，并形成书面需求文件提交甲方确认。经甲方确认后，作为项目开发、交付和验收依据。",
+        "如甲方提出需求变更，乙方应在2个工作日内完成书面评估并反馈对功能、工期、费用的影响，双方书面确认后执行。",
+        "因乙方理解错误、遗漏、技术方案不当或未尽合理审查义务导致的返工、修改或延期，由乙方自行承担责任及费用。",
+        "未经甲方书面同意，乙方不得擅自缩减功能、调整实现方式、替换关键技术方案、引入收费依赖或改变交付标准。"
+      ]
+    }
+  ]
+}
