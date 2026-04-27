@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 from pathlib import Path
 from typing import Any
@@ -20,10 +21,17 @@ class FileStorage:
     def __init__(self, settings: Settings) -> None:
         self.settings = settings
         self.max_size_bytes = int(settings.max_upload_size_mb * 1024 * 1024)
-        self.uploads_dir = settings.uploads_dir
-        self.results_dir = settings.results_dir
-        self.raw_results_dir = settings.raw_results_dir
-        self.temp_dir = settings.temp_dir
+        if os.getenv("VERCEL"):
+            storage_dir = Path("/tmp/storage")
+            self.uploads_dir = storage_dir / "uploads"
+            self.results_dir = storage_dir / "results"
+            self.raw_results_dir = storage_dir / "raw_results"
+            self.temp_dir = storage_dir / "temp"
+        else:
+            self.uploads_dir = settings.uploads_dir
+            self.results_dir = settings.results_dir
+            self.raw_results_dir = settings.raw_results_dir
+            self.temp_dir = settings.temp_dir
 
     def ensure_directories(self) -> None:
         for directory in (self.uploads_dir, self.results_dir, self.raw_results_dir, self.temp_dir):
