@@ -13,15 +13,15 @@ import { createReview, toApiErrorPayload } from "@/lib/api";
 import { MAX_FILE_SIZE_MB } from "@/lib/constants";
 import { getErrorDisplayContent } from "@/lib/error-messages";
 import { exceedsFileSizeLimit, isSupportedFile } from "@/lib/review-helpers";
+import { PRESET_REPORT_OVERVIEW_PATH } from "@/lib/routes";
 import { useReviewTask } from "@/lib/useReviewTask";
 import { ApiErrorPayload, ReviewRole } from "@/lib/types";
 import { useReviewStore } from "@/stores/reviewStore";
 
 const PAGE_TITLE = "上传合同文件";
-const VIEW_OVERVIEW = "查看结果总览";
+const VIEW_PRESET_REPORT = "查看预设报告";
 const INVALID_FILE_MESSAGE = "仅支持上传 .docx 或 .pdf 文件。";
 const EMPTY_FILE_MESSAGE = "请先选择一个 .docx 或 .pdf 合同文件。";
-const RESULT_PENDING_MESSAGE = "结果尚未生成，完成后即可查看。";
 
 function isFileValidationError(code: string | undefined) {
   return code === "invalid_file_type" || code === "file_too_large";
@@ -50,7 +50,6 @@ export default function NewReviewPage() {
   const latestWorkflowGroups = reviewStatus?.workflowGroups ?? (result?.taskId === taskId ? result.workflow?.groups : undefined);
   const localErrorDisplay = useMemo(() => getErrorDisplayContent(localError), [localError]);
   const taskErrorDisplay = useMemo(() => getErrorDisplayContent(taskError), [taskError]);
-  const canViewOverview = Boolean(taskId && result?.taskId === taskId);
 
   const handleFileSelect = (file: File | null) => {
     if (!file) {
@@ -111,11 +110,8 @@ export default function NewReviewPage() {
     }
   };
 
-  const handleViewOverview = () => {
-    if (!canViewOverview || !taskId) {
-      return;
-    }
-    router.push(`/review/${taskId}/overview`);
+  const handleViewPresetReport = () => {
+    router.push(PRESET_REPORT_OVERVIEW_PATH);
   };
 
   const fileValidationMessage = isFileValidationError(localError?.code)
@@ -149,12 +145,10 @@ export default function NewReviewPage() {
                 <div className="flex flex-wrap items-center justify-end gap-3">
                   <button
                     type="button"
-                    onClick={handleViewOverview}
-                    disabled={!canViewOverview}
-                    className="secondary-action px-5 py-3 disabled:cursor-not-allowed disabled:border-[#e2e8f0] disabled:bg-[#f8fafc] disabled:text-[#94a3b8]"
-                    title={!canViewOverview ? RESULT_PENDING_MESSAGE : undefined}
+                    onClick={handleViewPresetReport}
+                    className="secondary-action px-5 py-3"
                   >
-                    {VIEW_OVERVIEW}
+                    {VIEW_PRESET_REPORT}
                   </button>
                   <StartReviewButton
                     disabled={!selectedFile}

@@ -81,10 +81,18 @@ export function PageShell({ children }: { children: React.ReactNode }) {
     { key: "issues", label: NAV_ISSUES, href: taskId ? `/review/${taskId}/issues` : null },
   ] as const;
 
-  const handleLogout = () => {
-    clearAuthSession();
-    resetTaskData();
-    window.location.assign("/login");
+  const handleLogout = async () => {
+    try {
+      await fetch("/auth/logout", {
+        method: "POST",
+        credentials: "include",
+        cache: "no-store",
+      });
+    } finally {
+      clearAuthSession();
+      resetTaskData();
+      window.location.assign("/login");
+    }
   };
 
   return (

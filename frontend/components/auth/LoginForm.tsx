@@ -1,12 +1,11 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 
 import {
   AUTH_PASSWORD,
+  AUTH_STORAGE_KEY,
   AUTH_USERNAME,
-  hasAuthSessionInBrowser,
-  setAuthSession,
 } from "@/lib/auth";
 
 const PAGE_TITLE = "\u5408\u540c\u5ba1\u67e5\u5de5\u4f5c\u53f0";
@@ -19,6 +18,8 @@ const YUANBAO_LOGIN_LABEL = "\u817e\u8baf\u5143\u5b9d\u767b\u5f55";
 const DELI_LOGIN_LABEL = "\u5c0f\u7406AI\u767b\u5f55";
 const INVALID_CREDENTIALS =
   "\u767b\u5f55\u540d\u6216\u5bc6\u7801\u9519\u8bef\uff0c\u8bf7\u8f93\u5165 admin / admin\u3002";
+const LOGIN_FAILED = "\u767b\u5f55\u5931\u8d25\uff0c\u8bf7\u7a0d\u540e\u91cd\u8bd5\u3002";
+const SUBMITTING_LABEL = "\u767b\u5f55\u4e2d...";
 
 interface LoginFormProps {
   nextPath: string;
@@ -28,16 +29,9 @@ export function LoginForm({ nextPath }: LoginFormProps) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    if (!hasAuthSessionInBrowser()) {
-      return;
-    }
-
-    window.location.replace(nextPath);
-  }, [nextPath]);
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
@@ -49,9 +43,30 @@ export function LoginForm({ nextPath }: LoginFormProps) {
       return;
     }
 
-    setAuthSession(submittedUsername);
+    setIsSubmitting(true);
     setErrorMessage(null);
-    window.location.assign(nextPath);
+
+    try {
+      const response = await fetch("/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: submittedUsername, password: submittedPassword }),
+        credentials: "include",
+        cache: "no-store",
+      });
+
+      if (!response.ok) {
+        setErrorMessage(response.status === 401 ? INVALID_CREDENTIALS : LOGIN_FAILED);
+        return;
+      }
+
+      window.localStorage.setItem(AUTH_STORAGE_KEY, submittedUsername);
+      window.location.replace(nextPath);
+    } catch {
+      setErrorMessage(LOGIN_FAILED);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -100,8 +115,8 @@ export function LoginForm({ nextPath }: LoginFormProps) {
         {errorMessage ? <div className="info-banner info-banner-error">{errorMessage}</div> : null}
 
         <div className="login-action-grid">
-          <button type="submit" className="primary-action login-submit">
-            {SUBMIT_LABEL}
+          <button type="submit" className="primary-action login-submit" disabled={isSubmitting}>
+            {isSubmitting ? SUBMITTING_LABEL : SUBMIT_LABEL}
           </button>
 
           <button type="button" className="login-register-button">

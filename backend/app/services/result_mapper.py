@@ -66,7 +66,7 @@ class ResultMapper:
         extra_risk_topics = self._extract_extra_risk_topics(sources)
         issues = self._extract_legacy_issues(sources, findings)
         clause_risk_stats = self._extract_clause_risk_stats(sources, findings, extra_risk_topics, issues)
-        need_manual_review = self._extract_need_manual_review(sources, findings, extra_risk_topics)
+        need_manual_review = self._extract_need_manual_review(sources, findings, extra_risk_topics, issues)
         final_review_report = self._extract_final_review_report(sources)
         workflow = self._extract_workflow(sources)
         contract_sections = self._normalize_contract_sections(
@@ -230,11 +230,6 @@ class ResultMapper:
                 self._string_or_none(item.get("evidence_quote")),
                 self._string_or_none(item.get("evidenceQuote")),
             )
-            need_manual_review = self._read_bool(
-                item.get("need_manual_review")
-                if "need_manual_review" in item
-                else item.get("needManualReview")
-            )
             revision_suggestion = self._coalesce(
                 self._string_or_none(item.get("revision_suggestion")),
                 self._string_or_none(item.get("revisionSuggestion")),
@@ -248,6 +243,12 @@ class ResultMapper:
                 self._string_or_none(item.get("proposedAmendment")),
             )
             risk_level = self._normalize_risk_level(item.get("risk_level") or item.get("riskLevel"))
+            need_manual_review = self._resolve_need_manual_review(
+                risk_level,
+                item.get("need_manual_review")
+                if "need_manual_review" in item
+                else item.get("needManualReview"),
+            )
             risk_reason = self._coalesce(
                 self._string_or_none(item.get("risk_reason")),
                 self._string_or_none(item.get("riskReason")),
@@ -284,6 +285,13 @@ class ResultMapper:
             related_clause_titles = item.get("related_clause_titles")
             if not isinstance(related_clause_titles, list):
                 related_clause_titles = item.get("relatedClauseTitles")
+            risk_level = self._normalize_risk_level(item.get("risk_level") or item.get("riskLevel"))
+            need_manual_review = self._resolve_need_manual_review(
+                risk_level,
+                item.get("need_manual_review")
+                if "need_manual_review" in item
+                else item.get("needManualReview"),
+            )
 
             normalized.append(
                 {
@@ -326,12 +334,8 @@ class ResultMapper:
                         self._string_or_none(item.get("revisionSuggestion")),
                     )
                     or None,
-                    "need_manual_review": self._read_bool(
-                        item.get("need_manual_review")
-                        if "need_manual_review" in item
-                        else item.get("needManualReview")
-                    ),
-                    "risk_level": self._normalize_risk_level(item.get("risk_level") or item.get("riskLevel")),
+                    "need_manual_review": need_manual_review,
+                    "risk_level": risk_level,
                     "why_not_in_13": self._coalesce(
                         self._string_or_none(item.get("why_not_in_13")),
                         self._string_or_none(item.get("whyNotIn13")),
@@ -353,6 +357,7 @@ class ResultMapper:
         raw_stats = self._value_from_paths(sources, ("clause_risk_stats",))
         computed_stats = self._compute_clause_risk_stats(findings)
         issue_stats = self._compute_issue_level_stats(issues) if not findings else None
+        extra_topic_stats = self._compute_clause_risk_stats(extra_risk_topics)
 
         high_count = computed_stats.get("high_count")
         medium_count = computed_stats.get("medium_count")
@@ -364,6 +369,11 @@ class ResultMapper:
             medium_count = issue_stats.get("medium_count")
         if low_count is None and issue_stats is not None:
             low_count = issue_stats.get("low_count")
+
+        if extra_risk_topics:
+            high_count = (high_count or 0) + (extra_topic_stats.get("high_count") or 0)
+            medium_count = (medium_count or 0) + (extra_topic_stats.get("medium_count") or 0)
+            low_count = (low_count or 0) + (extra_topic_stats.get("low_count") or 0)
 
         extra_risk_topic_count = len(extra_risk_topics)
 
@@ -441,7 +451,22 @@ class ResultMapper:
         sources: list[dict[str, Any]],
         findings: list[dict[str, Any]],
         extra_risk_topics: list[dict[str, Any]],
+        issues: list[dict[str, Any]],
     ) -> bool | None:
+        review_items = [*findings, *extra_risk_topics]
+        if any(self._requires_manual_review_by_risk(item.get("risk_level")) for item in review_items):
+            return True
+        if any(self._requires_manual_review_by_risk(issue.get("level")) for issue in issues):
+            return True
+
+        review_flags = [
+            item.get("need_manual_review")
+            for item in review_items
+            if item.get("need_manual_review") is not None
+        ]
+        if any(bool(value) for value in review_flags):
+            return True
+
         direct_value = self._value_from_paths(
             sources,
             ("need_manual_review",),
@@ -453,13 +478,8 @@ class ResultMapper:
         if parsed_direct is not None:
             return parsed_direct
 
-        review_flags = [
-            item.get("need_manual_review")
-            for item in [*findings, *extra_risk_topics]
-            if item.get("need_manual_review") is not None
-        ]
         if review_flags:
-            return any(bool(value) for value in review_flags)
+            return False
 
         return None
 
@@ -765,6 +785,14 @@ class ResultMapper:
         if text in {"low", "低", "低风险"}:
             return "低"
         return None
+
+    def _requires_manual_review_by_risk(self, risk_level: Any) -> bool:
+        return self._normalize_risk_level(risk_level) in {"高", "中"}
+
+    def _resolve_need_manual_review(self, risk_level: Any, value: Any) -> bool | None:
+        if self._requires_manual_review_by_risk(risk_level):
+            return True
+        return self._read_bool(value)
 
     def _normalize_issue_level(self, value: Any, is_missing_item: bool) -> str:
         normalized = self._normalize_risk_level(value)

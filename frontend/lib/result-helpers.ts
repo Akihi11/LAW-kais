@@ -163,6 +163,13 @@ function buildFindingLevel(riskLevel: string | null | undefined): IssueLevel | n
   return null;
 }
 
+function resolveNeedManualReview(level: IssueLevel | null, value: boolean | null | undefined): boolean | null {
+  if (level === "high" || level === "medium") {
+    return true;
+  }
+  return typeof value === "boolean" ? value : null;
+}
+
 function getRiskLabelFromLevel(level: IssueLevel | null, isMissingItem: boolean): FindingRiskLabel | null {
   if (isMissingItem) {
     return "缺失项";
@@ -499,7 +506,7 @@ function createFindingItem(
     revisionSuggestion,
     proposedAmendment,
     comparisonSuggestionText,
-    needManualReview: typeof finding.need_manual_review === "boolean" ? finding.need_manual_review : null,
+    needManualReview: resolveNeedManualReview(level, finding.need_manual_review),
     sectionId: section?.id ?? null,
     originalClauseText: evidenceQuote || buildSectionExcerpt(section) || ORIGINAL_CLAUSE_EMPTY,
     topicCategory: null,
@@ -536,7 +543,7 @@ function createFindingItemFromIssue(issue: IssueItem, index: number, sections: C
     revisionSuggestion,
     proposedAmendment,
     comparisonSuggestionText: proposedAmendment ?? revisionSuggestion ?? null,
-    needManualReview: null,
+    needManualReview: resolveNeedManualReview(issue.level, null),
     sectionId: section?.id ?? null,
     originalClauseText: safeText(issue.original) || evidenceQuote || buildSectionExcerpt(section) || ORIGINAL_CLAUSE_EMPTY,
     topicCategory: null,
@@ -593,7 +600,7 @@ function createFindingItemFromExtraRiskTopic(
     revisionSuggestion,
     proposedAmendment: null,
     comparisonSuggestionText: revisionSuggestion,
-    needManualReview: typeof topic.need_manual_review === "boolean" ? topic.need_manual_review : null,
+    needManualReview: resolveNeedManualReview(level, topic.need_manual_review),
     sectionId: section?.id ?? null,
     originalClauseText: evidenceQuote || buildSectionExcerpt(section) || evidencePosition || ORIGINAL_CLAUSE_EMPTY,
     topicCategory,
@@ -675,9 +682,9 @@ export function getClauseRiskStats(result: ReviewResultResponse | null): ClauseR
   const sections = getContractSections(result);
   const primaryItems = getPrimaryFindingItems(result, sections);
   const extraRiskTopicItems = getExtraRiskTopicItems(result, sections, primaryItems.length);
-  const computed = calculateClauseRiskStats(primaryItems, extraRiskTopicItems.length);
+  const computed = calculateClauseRiskStats([...primaryItems, ...extraRiskTopicItems], extraRiskTopicItems.length);
 
-  if (hasClauseOrderedFindings(result) || primaryItems.length > 0) {
+  if (hasClauseOrderedFindings(result) || primaryItems.length > 0 || extraRiskTopicItems.length > 0) {
     return computed;
   }
 
@@ -712,18 +719,20 @@ export function getClauseRiskStats(result: ReviewResultResponse | null): ClauseR
 export function getOverviewSummary(result: ReviewResultResponse | null): OverviewSummary {
   const stats = getClauseRiskStats(result);
   const findings = getOrderedFindings(result);
-  const fallbackManualReview = findings.some((item) => item.needManualReview === true) ? true : null;
+  const derivedManualReview = findings.some((item) => item.needManualReview === true) ? true : null;
 
   return {
     contractType: safeText(result?.contract_type) || safeText(result?.basicInfo?.contractType) || null,
     overallConclusion: safeText(result?.overall_conclusion) || safeText(result?.summary?.conclusion) || null,
     overallRiskLevel: normalizeRiskLevel(result?.overall_risk_level) ?? normalizeRiskLevel(result?.summary?.riskLevel) ?? null,
     needManualReview:
-      typeof result?.need_manual_review === "boolean"
-        ? result.need_manual_review
-        : typeof result?.stats?.manualReview === "boolean"
-          ? result.stats.manualReview
-          : fallbackManualReview,
+      derivedManualReview === true
+        ? true
+        : typeof result?.need_manual_review === "boolean"
+          ? result.need_manual_review
+          : typeof result?.stats?.manualReview === "boolean"
+            ? result.stats.manualReview
+            : null,
     stats,
     finalReviewReport: safeText(result?.final_review_report) || safeText(result?.fullReport) || null,
   };
@@ -740,7 +749,7 @@ export function filterFindingItems(items: FindingListItem[], filter: IssueFilter
   if (filter === "other") {
     return items.filter((item) => isOtherFindingItem(item));
   }
-  return items.filter((item) => !item.isExtraRiskTopic && item.level === filter);
+  return items.filter((item) => item.level === filter);
 }
 
 export function getFindingFilterCount(
@@ -765,7 +774,7 @@ export function getFindingFilterCount(
     return items.filter((item) => isOtherFindingItem(item)).length;
   }
 
-  return items.filter((item) => !item.isExtraRiskTopic && item.level === filter).length;
+  return items.filter((item) => item.level === filter).length;
 }
 
 function isOtherFindingGroup(group: ClauseFindingGroup) {

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import { ApiError, getReviewResult, getReviewStatus, toApiErrorPayload } from "@/lib/api";
 import { MAX_STATUS_POLL_ATTEMPTS, STATUS_POLL_INTERVAL_MS } from "@/lib/constants";
+import { getPresetReport } from "@/lib/preset-report";
 import { useReviewStore } from "@/stores/reviewStore";
 
 interface UseReviewTaskOptions {
@@ -37,6 +38,16 @@ export function useReviewTask(taskId: string, options: UseReviewTaskOptions = {}
 
   useEffect(() => {
     if (!taskId) {
+      return;
+    }
+
+    const presetReport = getPresetReport(taskId);
+    if (presetReport) {
+      setTaskState("succeeded");
+      setReviewStatus(null);
+      setResult(presetReport);
+      setError(null);
+      setIsLoading(false);
       return;
     }
 
